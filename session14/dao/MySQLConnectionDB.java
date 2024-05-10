@@ -7,14 +7,10 @@ import java.sql.SQLException;
 public class MySQLConnectionDB {
     public static Connection getMySQLConnection() throws SQLException {
         Connection conn = null;
-        String hostName = "localhost";
-        String dbName = "nhom1";
-        String userName = "root";
-        String password = "";
-
-        String connectionURL = "jdbc:mysql://"+hostName+":3306/"+dbName;
-        conn = DriverManager.getConnection(connectionURL,userName,password);
-
+        String dbURL = "jdbc:mysql://localhost:3306/nhom1";
+        conn= DriverManager.getConnection(dbURL,"root","");
         return conn;
     }
+
+
 }
