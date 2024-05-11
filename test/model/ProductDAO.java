@@ -15,10 +15,7 @@ public class ProductDAO <T extends Products>{
     private final String SQL_CREATE_PRODUCT = "INSERT INTO products (product_id, product_name, product_description, product_price, product_quantity) VALUES (?, ?, ?, ?, ?)";
     private final String SQL_GET_ALL_PRODUCTS = "SELECT * FROM products";;
     private final String SQL_GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE product_id = ?";
-    private final String SQL_UPDATE_NAME_PRODUCT = "update products set product_name = ? where product_id = ?";
-    private final String SQL_UPDATE_DESCRIPTION_PRODUCT = "update products set product_description = ? where product_id = ?";
-    private final String SQL_UPDATE_PRICE_PRODUCT = "update products set product_price = ? where product_id = ?";
-    private final String SQL_UPDATE_QUANTITY_PRODUCT = "update products set product_quantity = ? where product_id = ?";
+    private final String SQL_UPDATE_PRODUCT = "update products set product_name = ?, product_description = ?, product_price = ?, product_quantity = ? where product_id = ?";
     private final String SQL_DELETE_PRODUCT = "delete from products where product_id = ?";
     public ProductDAO() throws SQLException {
     }
@@ -78,33 +75,18 @@ public class ProductDAO <T extends Products>{
         }
         return null;
     }
-    public void updateNameProduct(T product) throws SQLException {
-        PreparedStatement pstm = connection.prepareStatement(SQL_UPDATE_NAME_PRODUCT);
-        pstm.setInt(1, product.getId());
-        pstm.setString(2, product.getName());
-        pstm.executeUpdate();
+    public void updateProduct(T product) throws SQLException {
+        try (PreparedStatement pstm = connection.prepareStatement(SQL_UPDATE_PRODUCT)) {
+            pstm.setString(1, product.getName());
+            pstm.setString(2, product.getDescription());
+            pstm.setDouble(3, product.getPrice());
+            pstm.setInt(4, product.getQuantity());
+            pstm.setInt(5, product.getId());
+            pstm.executeUpdate();
+            System.out.println("Updated product successfully");
+        }
     }
 
-    public void updateDescriptionProduct(T product) throws SQLException {
-        PreparedStatement pstm = connection.prepareStatement(SQL_UPDATE_DESCRIPTION_PRODUCT);
-        pstm.setInt(1, product.getId());
-        pstm.setString(2, product.getDescription());
-        pstm.executeUpdate();
-    }
-
-    public void updatePriceProduct(T product) throws SQLException {
-        PreparedStatement pstm = connection.prepareStatement(SQL_UPDATE_PRICE_PRODUCT);
-        pstm.setInt(1, product.getId());
-        pstm.setDouble(2, product.getPrice());
-        pstm.executeUpdate();
-    }
-
-    public void updateQuantityProduct(T product) throws SQLException {
-        PreparedStatement pstm = connection.prepareStatement(SQL_UPDATE_QUANTITY_PRODUCT);
-        pstm.setInt(1, product.getId());
-        pstm.setInt(2, product.getQuantity());
-        pstm.executeUpdate();
-    }
     public boolean deleteProduct(int productId){
         try {
             PreparedStatement pstm = connection.prepareStatement(SQL_DELETE_PRODUCT);

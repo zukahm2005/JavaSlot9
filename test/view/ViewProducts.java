@@ -20,12 +20,9 @@ public class ViewProducts<T extends Products> {
         System.out.println("1. Create product");
         System.out.println("2. Show all products");
         System.out.println("3. Find product by id");
-        System.out.println("4. Update name product");
-        System.out.println("5. Update description product");
-        System.out.println("6. Update price product");
-        System.out.println("7. Update quantity product");
-        System.out.println("8. Delete product");
-        System.out.println("9. Back");
+        System.out.println("4. Update product");
+        System.out.println("5. Delete product");
+        System.out.println("6. Back");
         System.out.println("Your choice: ");
         int choice = Integer.parseInt(sc.nextLine());
         return choice;
@@ -44,21 +41,12 @@ public class ViewProducts<T extends Products> {
                     getProductByIdUI();
                     break;
                 case 4:
-                    updateNameProduct();
+                    updateProduct();
                     break;
                 case 5 :
-                    updateDescriptionProduct();
-                    break;
-                case 6:
-                    updatePriceProduct();
-                    break;
-                case 7:
-                    updateQuantityProduct();
-                    break;
-                case 8:
                     deleteProductUI();
                     break;
-                case 9:
+                case 6:
                     Menu menu = new Menu();
                     menu.start();
                     break;
@@ -126,62 +114,25 @@ public class ViewProducts<T extends Products> {
             System.out.println("Invalid choice. Please enter 'y' or 'n'");
         }
     }
-    public void updateNameProduct() {
-        System.out.print("Enter product ID to update name: ");
+    public void updateProduct() {
+        System.out.print("Enter product ID to update : ");
         int productId = Integer.parseInt(sc.nextLine());
-        System.out.print("Enter new name: ");
+        System.out.println("Enter name :");
         String newName = sc.nextLine();
-
-        Products product = new Products(productId, newName, null, 0.0,0);
+        System.out.println("Enter description: ");
+        String newDescription = sc.nextLine();
+        System.out.println("Enter price: ");
+        double newPrice = sc.nextDouble();
+        System.out.println("Enter quantity: ");
+        int newQuantity = sc.nextInt();
+        Products product = new Products(productId, newName, newDescription, newPrice,newQuantity);
         try {
-            controllerProducts.updateNameProductController(product);
+            controllerProducts.updateProductController(product);
             System.out.println("Product name updated successfully.");
         } catch (SQLException e) {
             System.out.println("Error updating product name: " + e.getMessage());
         }
     }
 
-    public void updateDescriptionProduct() {
-        System.out.print("Enter product ID to update description: ");
-        int productId = Integer.parseInt(sc.nextLine());
-        System.out.print("Enter new description: ");
-        String newDescription = sc.nextLine();
 
-        Products product = new Products(productId, null, newDescription, 0.0,0);
-        try {
-            controllerProducts.updateDescriptionProductController(product);
-            System.out.println("Product description updated successfully.");
-        } catch (SQLException e) {
-            System.out.println("Error updating product description: " + e.getMessage());
-        }
-    }
-
-    public void updatePriceProduct() {
-        System.out.print("Enter product ID to update price: ");
-        int productId = Integer.parseInt(sc.nextLine());
-        System.out.print("Enter new price: ");
-        double newPrice = Double.parseDouble(sc.nextLine());
-
-        Products product = new Products(productId, null, null, newPrice,0);
-        try {
-            controllerProducts.updatePriceProductController(product);
-            System.out.println("Product price updated successfully.");
-        } catch (SQLException e) {
-            System.out.println("Error updating product price: " + e.getMessage());
-        }
-    }
-    public void updateQuantityProduct() {
-        System.out.print("Enter product ID to update quantity: ");
-        int productId = Integer.parseInt(sc.nextLine());
-        System.out.print("Enter new quantity: ");
-        int newQuantity = Integer.parseInt(sc.nextLine());
-
-        Products product = new Products(productId, null, null, 0.0,newQuantity);
-        try {
-            controllerProducts.updateQuantityProductController(product);
-            System.out.println("Product quantity updated successfully.");
-        } catch (SQLException e) {
-            System.out.println("Error updating product quantity: " + e.getMessage());
-        }
-    }
 }

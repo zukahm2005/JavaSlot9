@@ -22,17 +22,8 @@ public class ControllerProducts <T extends Products>{
         return (List<T>) productDAO.getProductById(productId);
 
     }
-    public void updateNameProductController(T product) throws SQLException {
-        productDAO.updateNameProduct(product);
-    }
-    public void updateDescriptionProductController(T product) throws SQLException {
-        productDAO.updateDescriptionProduct(product);
-    }
-    public void updatePriceProductController(T product) throws SQLException {
-        productDAO.updatePriceProduct(product);
-    }
-    public void updateQuantityProductController(T product) throws SQLException {
-        productDAO.updateQuantityProduct(product);
+    public void updateProductController(T product) throws SQLException {
+        productDAO.updateProduct(product);
     }
     public boolean deleteProductController(int productId){
         return productDAO.deleteProduct(productId);
